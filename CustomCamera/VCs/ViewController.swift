@@ -30,14 +30,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func capture() {
-        
         restartTimer()
-        print("111")
     }
     
     @IBAction func stopCapturing() {
         pressTimer?.invalidate()
-        print("222")
         isVideoRecorded ? camera.stopVideoRecording() : camera.capturePhoto()
         isVideoRecorded = false
     }
@@ -60,8 +57,8 @@ extension ViewController: CameraDelegate {
         MediaLibrary.shared.add(MediaData.photo(imageData))
     }
     
-    func camera(_ camera: Camera, didFinishrecordingVideo: URL) {
-        MediaLibrary.shared.add(MediaData.video(didFinishrecordingVideo))
+    func camera(_ camera: Camera, didFinishrecordingVideo url: URL) {
+        MediaLibrary.shared.add(MediaData.video(url))
     }
 }
 

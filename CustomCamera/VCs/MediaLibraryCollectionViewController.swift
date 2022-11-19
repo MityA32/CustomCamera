@@ -11,30 +11,44 @@ class MediaLibraryCollectionViewController: UICollectionViewController {
 
     let mediaRepository = MediaLibrary.shared.mediaRepository
     
-    @IBOutlet private weak var mediaRepositoryCollectionView: UICollectionView!
-    
+    var columnLayout = ColumnFlowLayout(
+        cellsPerRow: 3,
+        minimumInteritemSpacing: 3,
+        minimumLineSpacing: 3,
+        sectionInset: UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
+    )
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        print("111")
+        collectionView.collectionViewLayout = columnLayout
+        print(mediaRepository)
     }
 
 }
 
-extension MediaLibraryCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension MediaLibraryCollectionViewController {
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         mediaRepository.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaCell", for: indexPath) as! MediaLibraryCollectionViewCell
-        if case .photo = mediaRepository[indexPath.row] {
-            print("555")
-        } else {
-            
-        }
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaDataCell", for: indexPath) as! MediaLibraryCollectionViewCell
+        cell.config(of: mediaRepository[indexPath.row])
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(mediaRepository[indexPath.row])
+        performSegue(withIdentifier: "show_media_details", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "show_media_details"),
+           let destination = segue.destination as? MediaDetailsCollectionViewController,
+           let mediaDataIndex = self.collectionView.indexPathsForSelectedItems?.first {
+            destination.indexOfInitialMediaData = mediaDataIndex
+        }
     }
     
     
