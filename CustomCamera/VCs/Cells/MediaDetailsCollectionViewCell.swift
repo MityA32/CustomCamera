@@ -10,7 +10,7 @@ import UIKit
 class MediaDetailsCollectionViewCell: UICollectionViewCell {
     
     var mediaController: MediaDetailsCollectionViewController?
-    weak var delegate: DeleteDataDelegate?
+    weak var delegate: MediaLibraryDelegate?
     var indexPath: IndexPath?
     
     func config(photo media: MediaData) {

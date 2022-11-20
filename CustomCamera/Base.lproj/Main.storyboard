@@ -154,7 +154,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ru3-aU-3v0">
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ru3-aU-3v0">
                             <size key="itemSize" width="325" height="400"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -162,7 +162,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MediaDetailsCell" id="vM9-95-HtR" customClass="MediaDetailsCollectionViewCell" customModule="CustomCamera" customModuleProvider="target">
-                                <rect key="frame" x="31.666666666666668" y="0.0" width="330" height="400"/>
+                                <rect key="frame" x="0.0" y="157.66666666666666" width="330" height="400"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="bpk-Bl-paS">
                                     <rect key="frame" x="0.0" y="0.0" width="330" height="400"/>

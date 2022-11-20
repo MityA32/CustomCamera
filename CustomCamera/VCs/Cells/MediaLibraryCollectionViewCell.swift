@@ -25,7 +25,6 @@ class MediaLibraryCollectionViewCell: UICollectionViewCell {
     }
     
     private func createVideoThumbnail(from url: URL) -> UIImage? {
-
         let asset = AVAsset(url: url)
         let assetImgGenerate = AVAssetImageGenerator(asset: asset)
         assetImgGenerate.appliesPreferredTrackTransform = true
@@ -37,10 +36,9 @@ class MediaLibraryCollectionViewCell: UICollectionViewCell {
             let thumbnail = UIImage(cgImage: img)
             return thumbnail
         } catch {
+            print("fgsjksfjk")
             print(error.localizedDescription)
             return nil
         }
-
     }
-    
 }

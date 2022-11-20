@@ -37,6 +37,7 @@ extension MediaLibraryCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaDataCell", for: indexPath) as! MediaLibraryCollectionViewCell
+        
         cell.config(of: modelOf.mediaRepository[indexPath.row])
         return cell
     }
@@ -58,10 +59,28 @@ extension MediaLibraryCollectionViewController {
     
 }
 
-extension MediaLibraryCollectionViewController: UpdateMediaLibrary {
+extension MediaLibraryCollectionViewController: MediaLibraryDelegate {
     func reloadMediaLibrary() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { 
             self.collectionView.reloadData()
         }
+    }
+    
+    func delete(_ media: MediaData, of indexPath: IndexPath) {
+        MediaLibrary.shared.remove(media)
+        DispatchQueue.main.async { [collectionView] in
+            collectionView?.deleteItems(at: [indexPath])
+        }
+    }
+}
+
+protocol MediaLibraryDelegate: AnyObject {
+    func reloadMediaLibrary()
+    func delete(_ media: MediaData, of indexPath: IndexPath)
+}
+
+extension MediaLibraryDelegate {
+    func reloadMediaLibrary() {
+        
     }
 }

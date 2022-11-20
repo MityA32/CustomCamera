@@ -11,7 +11,7 @@ class MediaDetailsCollectionViewController: UICollectionViewController {
 
     let modelOf = MediaLibrary.shared
     var indexOfInitialMediaData: IndexPath?
-    weak var delegate: UpdateMediaLibrary?
+    weak var delegate: MediaLibraryDelegate?
     
     @IBOutlet weak var backButton: UINavigationItem!
     
@@ -41,7 +41,7 @@ class MediaDetailsCollectionViewController: UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let indexPath = indexOfInitialMediaData else { return }
-        collectionView.scrollToItem(at: indexPath, at: .right, animated: false)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
     }
     
 }
@@ -59,9 +59,9 @@ extension MediaDetailsCollectionViewController {
                     return self.createMediaDataSection(using: mediaData)
                 }
             }
-            guard let placeholder = UIImage(systemName: "camera.macro")?.pngData() else { return nil }
-            return self.createMediaDataSection(using: .photo(placeholder))
-            
+//            guard let placeholder = UIImage(systemName: "camera.macro")?.pngData() else { return nil }
+//            return self.createMediaDataSection(using: .photo(placeholder))
+            return nil
         }
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
@@ -85,10 +85,6 @@ extension MediaDetailsCollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if modelOf.mediaRepository.isEmpty {
-            self.navigationController?.popViewController(animated: true)
-            
-        }
         return modelOf.mediaRepository.count
     }
 
@@ -106,18 +102,30 @@ extension MediaDetailsCollectionViewController {
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("tut nado shob bylo")
+    }
+    
 }
 
-extension MediaDetailsCollectionViewController: DeleteDataDelegate {
+extension MediaDetailsCollectionViewController: MediaLibraryDelegate {
     func delete(_ media: MediaData, of indexPath: IndexPath) {
-        MediaLibrary.shared.remove(media)
-        DispatchQueue.main.async {
-            self.collectionView.deleteItems(at: [indexPath])
-            self.collectionView.reloadData()
+        
+        delegate?.delete(media, of: indexPath)
+        
+        DispatchQueue.main.async { [collectionView, modelOf, navigationController] in
+            collectionView?.deleteItems(at: [indexPath])
+            if indexPath.row == modelOf.mediaRepository.count {
+                if modelOf.mediaRepository.isEmpty {
+                    navigationController?.popViewController(animated: true)
+                }
+                let currentIndexPath = IndexPath(item: indexPath.row - 1, section: indexPath.section)
+                collectionView?.scrollToItem(at: currentIndexPath, at: .centeredHorizontally, animated: true)
+            }
         }
     }
 }
 
-protocol UpdateMediaLibrary: AnyObject {
-    func reloadMediaLibrary()
-}
+
+
+

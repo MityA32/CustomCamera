@@ -14,7 +14,7 @@ final class PlayerViewController: UIViewController {
     var player: AVPlayer?
     var urlOfSelectedVideo: URL?
     weak var mediaController: MediaDetailsCollectionViewController?
-    weak var delegate: DeleteDataDelegate?
+    weak var delegate: MediaLibraryDelegate?
     var indexPath: IndexPath?
 
     private var isPlayed = true
@@ -43,7 +43,7 @@ final class PlayerViewController: UIViewController {
     
     
     @IBAction func deleteVideo(_ sender: Any) {
-        if let url = urlOfSelectedVideo, let indexPath = indexPath {
+        if let url = urlOfSelectedVideo, let indexPath {
             delegate?.delete(.video(url), of: indexPath)
         }
         

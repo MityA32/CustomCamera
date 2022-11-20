@@ -12,7 +12,7 @@ class PhotoViewController: UIViewController {
 
     var photoData: Data?
     weak var mediaController: MediaDetailsCollectionViewController?
-    weak var delegate: DeleteDataDelegate?
+    weak var delegate: MediaLibraryDelegate?
     var indexPath: IndexPath?
     
     @IBOutlet private weak var photoView: UIView!
@@ -59,6 +59,4 @@ class PhotoViewController: UIViewController {
 
 }
 
-protocol DeleteDataDelegate: AnyObject {
-    func delete(_ media: MediaData, of indexPath: IndexPath)
-}
+
