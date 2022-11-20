@@ -21,13 +21,10 @@ class MediaLibraryCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.collectionViewLayout = columnLayout
-        print(modelOf)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        
     }
 
 }
@@ -67,6 +64,4 @@ extension MediaLibraryCollectionViewController: UpdateMediaLibrary {
             self.collectionView.reloadData()
         }
     }
-    
-    
 }

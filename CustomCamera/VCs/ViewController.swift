@@ -18,7 +18,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
         try? camera.prepare()
         try? camera.add(to: view)
         
@@ -47,7 +46,6 @@ class ViewController: UIViewController {
             
             timer.invalidate()
         }
-        
     }
 
 }

@@ -12,8 +12,6 @@ class MediaLibraryCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet private weak var imageView: UIImageView!
     
-    
-    
     func config(of media: MediaData) {
         imageView.clipsToBounds = true
         if case let .photo(data) = media {

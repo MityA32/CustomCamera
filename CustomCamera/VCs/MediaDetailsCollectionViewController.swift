@@ -7,8 +7,6 @@
 
 import UIKit
 
-
-
 class MediaDetailsCollectionViewController: UICollectionViewController {
 
     let modelOf = MediaLibrary.shared
@@ -33,10 +31,6 @@ class MediaDetailsCollectionViewController: UICollectionViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    
-    
-    
-    
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositonalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -48,14 +42,12 @@ class MediaDetailsCollectionViewController: UICollectionViewController {
         super.viewWillAppear(animated)
         guard let indexPath = indexOfInitialMediaData else { return }
         collectionView.scrollToItem(at: indexPath, at: .right, animated: false)
-        
     }
-    
-    
     
 }
 
 extension MediaDetailsCollectionViewController {
+    
     func createCompositonalLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout {
             sectionIndex, layoutEnvironment in
@@ -101,7 +93,6 @@ extension MediaDetailsCollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MediaDetailsCollectionViewCell
         cell.mediaController = self
         cell.delegate = self
@@ -112,7 +103,6 @@ extension MediaDetailsCollectionViewController {
         } else if case .video(_) = media {
             cell.config(video: media)
         }
-        
         return cell
     }
     
@@ -121,16 +111,11 @@ extension MediaDetailsCollectionViewController {
 extension MediaDetailsCollectionViewController: DeleteDataDelegate {
     func delete(_ media: MediaData, of indexPath: IndexPath) {
         MediaLibrary.shared.remove(media)
-        
         DispatchQueue.main.async {
             self.collectionView.deleteItems(at: [indexPath])
             self.collectionView.reloadData()
         }
-        
-        
-        
     }
-    
 }
 
 protocol UpdateMediaLibrary: AnyObject {

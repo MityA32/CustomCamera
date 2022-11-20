@@ -39,8 +39,6 @@ final class Camera: NSObject {
     
     private var cameraPosition: AVCaptureDevice.Position = .back
     
-//    private var audioDevice: AVAudioDe
-    
     private(set) var isCameraReady = false
     weak var delegate: CameraDelegate?
     
@@ -117,10 +115,7 @@ private extension Camera {
         try setupAudio()
         
         //start session
-        
-        
         DispatchQueue(label: "camera.queue").async {
-            
             self.captureSession.startRunning()
         }
         isCameraReady = true
