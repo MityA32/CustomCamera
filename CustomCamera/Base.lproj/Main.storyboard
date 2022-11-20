@@ -184,6 +184,70 @@
             </objects>
             <point key="canvasLocation" x="907.63358778625945" y="781.69014084507046"/>
         </scene>
+        <!--Photo View Controller-->
+        <scene sceneID="v3U-dJ-JN5">
+            <objects>
+                <viewController storyboardIdentifier="PhotoViewController" id="t1z-yD-DZN" customClass="PhotoViewController" customModule="CustomCamera" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5XB-tV-aJu">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pew-mi-eEV" userLabel="PhotoView">
+                                <rect key="frame" x="0.0" y="59" width="393" height="695"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w95-rc-2bl">
+                                <rect key="frame" x="0.0" y="754" width="393" height="64"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="onq-Ai-5TY">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="64"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dq3-Pm-biv" userLabel="SavePhoto">
+                                                <rect key="frame" x="0.0" y="0.0" width="196.66666666666666" height="64"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="square.and.arrow.down" catalog="system"/>
+                                                <connections>
+                                                    <action selector="savePhotoToPhotos:" destination="t1z-yD-DZN" eventType="touchUpInside" id="a35-yX-cFp"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1DA-hK-6o5" userLabel="DeletePhoto">
+                                                <rect key="frame" x="196.66666666666663" y="0.0" width="196.33333333333337" height="64"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system"/>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="onq-Ai-5TY" firstAttribute="leading" secondItem="w95-rc-2bl" secondAttribute="leading" id="3QO-Wi-P1f"/>
+                                    <constraint firstItem="onq-Ai-5TY" firstAttribute="top" secondItem="w95-rc-2bl" secondAttribute="top" id="J4X-da-fEJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="onq-Ai-5TY" secondAttribute="trailing" id="PEB-L5-ESa"/>
+                                    <constraint firstAttribute="bottom" secondItem="onq-Ai-5TY" secondAttribute="bottom" id="a3I-fF-Bh5"/>
+                                    <constraint firstAttribute="height" constant="64" id="kgs-qj-jDO"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="mAi-yd-f7G"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="mAi-yd-f7G" firstAttribute="trailing" secondItem="w95-rc-2bl" secondAttribute="trailing" id="46F-wP-2f0"/>
+                            <constraint firstItem="mAi-yd-f7G" firstAttribute="trailing" secondItem="Pew-mi-eEV" secondAttribute="trailing" id="7JR-ZH-eEf"/>
+                            <constraint firstItem="mAi-yd-f7G" firstAttribute="bottom" secondItem="w95-rc-2bl" secondAttribute="bottom" id="P3Y-Qz-Ghu"/>
+                            <constraint firstItem="w95-rc-2bl" firstAttribute="top" secondItem="Pew-mi-eEV" secondAttribute="bottom" id="ZC0-TH-UHb"/>
+                            <constraint firstItem="Pew-mi-eEV" firstAttribute="leading" secondItem="mAi-yd-f7G" secondAttribute="leading" id="i9f-hm-gUq"/>
+                            <constraint firstItem="w95-rc-2bl" firstAttribute="leading" secondItem="mAi-yd-f7G" secondAttribute="leading" id="l3g-VS-3oF"/>
+                            <constraint firstItem="Pew-mi-eEV" firstAttribute="top" secondItem="mAi-yd-f7G" secondAttribute="top" id="tDr-kA-vs4"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="photoView" destination="Pew-mi-eEV" id="Lko-Ul-fNg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="513-vK-bh9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1978" y="1094"/>
+        </scene>
         <!--Player View Controller-->
         <scene sceneID="v9X-0u-57B">
             <objects>
@@ -194,7 +258,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="etr-MX-29k">
                                 <rect key="frame" x="0.0" y="59" width="393" height="695"/>
-                                <color key="backgroundColor" systemColor="systemBrownColor"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4lu-eL-dyt">
                                 <rect key="frame" x="0.0" y="754" width="393" height="64"/>
@@ -205,7 +269,10 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YTb-er-xjF">
                                                 <rect key="frame" x="0.0" y="0.0" width="98.333333333333329" height="64"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="square.and.arrow.up" catalog="system"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="square.and.arrow.down" catalog="system"/>
+                                                <connections>
+                                                    <action selector="saveVideo:" destination="LNs-yx-8ff" eventType="touchUpInside" id="ICT-5Q-wsA"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xq5-3z-3e7" userLabel="Play/Pause">
                                                 <rect key="frame" x="98.333333333333343" y="0.0" width="98.333333333333343" height="64"/>
@@ -219,16 +286,22 @@
                                                 <rect key="frame" x="196.66666666666666" y="0.0" width="97.999999999999972" height="64"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="speaker.slash.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="toggleSound:" destination="LNs-yx-8ff" eventType="touchUpInside" id="aAf-vC-qtH"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQr-IW-RPu">
                                                 <rect key="frame" x="294.66666666666669" y="0.0" width="98.333333333333314" height="64"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system"/>
+                                                <connections>
+                                                    <action selector="deleteVideo:" destination="LNs-yx-8ff" eventType="touchUpInside" id="gwY-ni-x8m"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemMintColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="ecd-mo-6bU" secondAttribute="trailing" id="FSc-Oi-NQZ"/>
                                     <constraint firstAttribute="bottom" secondItem="ecd-mo-6bU" secondAttribute="bottom" id="NmB-gB-LNT"/>
@@ -239,7 +312,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Tm8-D8-lUG"/>
-                        <color key="backgroundColor" systemColor="systemYellowColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="4lu-eL-dyt" firstAttribute="top" secondItem="etr-MX-29k" secondAttribute="bottom" id="73a-bD-nmI"/>
                             <constraint firstItem="Tm8-D8-lUG" firstAttribute="trailing" secondItem="etr-MX-29k" secondAttribute="trailing" id="Ajk-bx-hdT"/>
@@ -251,13 +324,14 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="isMutedButton" destination="tHj-Ex-v6k" id="RGB-wy-isN"/>
                         <outlet property="playPauseButton" destination="Xq5-3z-3e7" id="V2H-gI-iji"/>
                         <outlet property="playerView" destination="etr-MX-29k" id="GAL-zN-GAr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mbq-uW-cao" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1909" y="689"/>
+            <point key="canvasLocation" x="1979" y="434"/>
         </scene>
     </scenes>
     <resources>
@@ -266,22 +340,13 @@
         <image name="photo.on.rectangle" catalog="system" width="128" height="98"/>
         <image name="play.fill" catalog="system" width="117" height="128"/>
         <image name="speaker.slash.fill" catalog="system" width="118" height="128"/>
-        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
+        <image name="square.and.arrow.down" catalog="system" width="121" height="128"/>
         <image name="trash" catalog="system" width="117" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemBrownColor">
-            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemMintColor">
-            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemYellowColor">
-            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -79,11 +79,11 @@ extension MediaDetailsCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MediaDetailsCollectionViewCell
+        cell.mediaController = self
         let media = mediaRepository[indexPath.row]
         if case .photo(_) = media {
             cell.config(photo: media)
         } else if case .video(_) = media {
-            cell.mediaController = self
             cell.config(video: media)
         }
         

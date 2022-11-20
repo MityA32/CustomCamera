@@ -12,19 +12,13 @@ class MediaDetailsCollectionViewCell: UICollectionViewCell {
     var mediaController: MediaDetailsCollectionViewController?
     
     func config(photo media: MediaData) {
-        let imageView = UIImageView()
         if case let .photo(data) = media {
-            imageView.image = UIImage(data: data)
-            imageView.frame = contentView.bounds
-            imageView.center = contentView.center
-            imageView.contentMode = .scaleAspectFit
-            contentView.addSubview(imageView)
+            display(photo: data, on: contentView)
         }
     }
     
     func config(video media: MediaData) {
         if case let .video(url) = media {
-            
             display(video: url, on: contentView)
         }
     }
@@ -34,14 +28,24 @@ class MediaDetailsCollectionViewCell: UICollectionViewCell {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let playerVC = storyboard.instantiateViewController(withIdentifier: "PlayerViewController") as! PlayerViewController
         playerVC.urlOfSelectedVideo = url
-        print(mediaController)
         mediaController?.addChild(playerVC)
         view.addSubview(playerVC.view)
         playerVC.view.frame = contentView.bounds
         playerVC.view.center = contentView.center
         playerVC.view.contentMode = .scaleAspectFit
-        
         playerVC.didMove(toParent: mediaController)
+    }
+    
+    func display(photo media: Data, on view: UIView) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let photoVC = storyboard.instantiateViewController(withIdentifier: "PhotoViewController") as! PhotoViewController
+        photoVC.photoData = media
+        mediaController?.addChild(photoVC)
+        view.addSubview(photoVC.view)
+        photoVC.view.frame = contentView.bounds
+        photoVC.view.center = contentView.center
+        photoVC.view.contentMode = .scaleAspectFit
+        photoVC.didMove(toParent: mediaController)
     }
     
     

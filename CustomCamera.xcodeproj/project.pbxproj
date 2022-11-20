@@ -14,6 +14,7 @@
 		935CDD1329246D580025BDD4 /* ColumnFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935CDD1229246D580025BDD4 /* ColumnFlowLayout.swift */; };
 		93761791292678530093B4C1 /* MediaDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93761790292678530093B4C1 /* MediaDetailsCollectionViewController.swift */; };
 		9376179329267D070093B4C1 /* MediaDetailsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9376179229267D070093B4C1 /* MediaDetailsCollectionViewCell.swift */; };
+		93816DD72929511B00393162 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93816DD62929511B00393162 /* PhotoViewController.swift */; };
 		93EDF3832919CDB900D5C29A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EDF3822919CDB900D5C29A /* AppDelegate.swift */; };
 		93EDF3852919CDB900D5C29A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EDF3842919CDB900D5C29A /* SceneDelegate.swift */; };
 		93EDF3872919CDB900D5C29A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EDF3862919CDB900D5C29A /* ViewController.swift */; };
@@ -31,6 +32,7 @@
 		935CDD1229246D580025BDD4 /* ColumnFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnFlowLayout.swift; sourceTree = "<group>"; };
 		93761790292678530093B4C1 /* MediaDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		9376179229267D070093B4C1 /* MediaDetailsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetailsCollectionViewCell.swift; sourceTree = "<group>"; };
+		93816DD62929511B00393162 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		93EDF37F2919CDB900D5C29A /* CustomCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93EDF3822919CDB900D5C29A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93EDF3842919CDB900D5C29A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,9 +67,10 @@
 			isa = PBXGroup;
 			children = (
 				93EDF3862919CDB900D5C29A /* ViewController.swift */,
-				935CDD0729225BA10025BDD4 /* PlayerViewController.swift */,
 				935CDD09292265B90025BDD4 /* MediaLibraryCollectionViewController.swift */,
 				93761790292678530093B4C1 /* MediaDetailsCollectionViewController.swift */,
+				935CDD0729225BA10025BDD4 /* PlayerViewController.swift */,
+				93816DD62929511B00393162 /* PhotoViewController.swift */,
 				935CDD11292316880025BDD4 /* Cells */,
 			);
 			path = VCs;
@@ -80,6 +83,15 @@
 				9376179229267D070093B4C1 /* MediaDetailsCollectionViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		93816DD82929540000393162 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				935CDD1229246D580025BDD4 /* ColumnFlowLayout.swift */,
+				93EDF3962919CDD600D5C29A /* Camera.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		93EDF3762919CDB900D5C29A = {
@@ -101,6 +113,7 @@
 		93EDF3812919CDB900D5C29A /* CustomCamera */ = {
 			isa = PBXGroup;
 			children = (
+				93816DD82929540000393162 /* Utils */,
 				935CDD10292316660025BDD4 /* VCs */,
 				935CDD0F292316570025BDD4 /* Model */,
 				93EDF3822919CDB900D5C29A /* AppDelegate.swift */,
@@ -109,8 +122,6 @@
 				93EDF38B2919CDBA00D5C29A /* Assets.xcassets */,
 				93EDF38D2919CDBA00D5C29A /* LaunchScreen.storyboard */,
 				93EDF3902919CDBA00D5C29A /* Info.plist */,
-				93EDF3962919CDD600D5C29A /* Camera.swift */,
-				935CDD1229246D580025BDD4 /* ColumnFlowLayout.swift */,
 			);
 			path = CustomCamera;
 			sourceTree = "<group>";
@@ -191,6 +202,7 @@
 				93EDF3972919CDD600D5C29A /* Camera.swift in Sources */,
 				93EDF3872919CDB900D5C29A /* ViewController.swift in Sources */,
 				935CDD0E292316440025BDD4 /* MediaLibraryCollectionViewCell.swift in Sources */,
+				93816DD72929511B00393162 /* PhotoViewController.swift in Sources */,
 				93EDF3832919CDB900D5C29A /* AppDelegate.swift in Sources */,
 				93761791292678530093B4C1 /* MediaDetailsCollectionViewController.swift in Sources */,
 				93EDF3852919CDB900D5C29A /* SceneDelegate.swift in Sources */,

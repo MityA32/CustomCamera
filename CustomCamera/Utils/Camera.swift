@@ -23,6 +23,7 @@ final class Camera: NSObject {
         case cantAddInput
         case cantAddOutput
         case cantCreateLayerNow
+        case cantAddAudioInput
         
     }
     
@@ -68,6 +69,7 @@ extension Camera {
         
         try setupDevices()
         try setupInputs()
+        try setupAudio()
     }
     
     func capturePhoto() {
@@ -111,6 +113,9 @@ private extension Camera {
         try setupInputs()
         //outputs
         try setupOutputs()
+        //audio
+        try setupAudio()
+        
         //start session
         
         
@@ -124,13 +129,14 @@ private extension Camera {
     func setupDevices() throws {
 
 //        let discoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: cameraPosition == .back ? [.builtInDualCamera] : [.builtInWideAngleCamera], mediaType: .video, position: .unspecified)
-        let discoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .unspecified)
+        let discoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInMicrophone], mediaType: .video, position: .unspecified)
         
         let cameras = discoverySession.devices
         
         guard let camera = cameras.first(where: { $0.position == cameraPosition }) else { throw CameraError.deviceUnavailable }
         
         currentCamera = camera
+        
         
         try camera.lockForConfiguration()
         if camera.isFocusModeSupported(.continuousAutoFocus) {
@@ -166,16 +172,17 @@ private extension Camera {
         }
     }
     
-//    func setupAudio() throws {
-//        if let audioDevice = self.audioDevice {
-//            self.audioInput = try AVCaptureDeviceInput(device: audioDevice)
-//            if captureSession.canAddInput(self.audioInput!) {
-//                captureSession.addInput(self.audioInput!)
-//            } else {
-//                throw CameraControllerError.inputsAreInvalid
-//            }
-//        }
-//    }
+    func setupAudio() throws {
+        guard let audioDevice = AVCaptureDevice.default(for: AVMediaType.audio) else { return }
+        let currentAudioInput = try AVCaptureDeviceInput(device: audioDevice)
+        if captureSession.canAddInput(currentAudioInput) {
+            captureSession.addInput(currentAudioInput)
+        } else {
+            throw CameraError.cantAddAudioInput
+        }
+       
+        
+    }
     
 }
 

@@ -44,6 +44,13 @@ extension MediaLibrary {
         mediaRepository.append(mediaData)
         save()
     }
+    
+    func remove(_ mediaData: MediaData) {
+        if let index = mediaRepository.firstIndex(where: { $0 == mediaData }) {
+            mediaRepository.remove(at: index)
+        }
+        save()
+    }
 }
 
 
