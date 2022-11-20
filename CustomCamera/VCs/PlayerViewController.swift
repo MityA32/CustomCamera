@@ -14,6 +14,8 @@ final class PlayerViewController: UIViewController {
     var player: AVPlayer?
     var urlOfSelectedVideo: URL?
     weak var mediaController: MediaDetailsCollectionViewController?
+    weak var delegate: DeleteDataDelegate?
+    var indexPath: IndexPath?
 
     private var isPlayed = true
     private var isMuted = true
@@ -41,7 +43,10 @@ final class PlayerViewController: UIViewController {
     
     
     @IBAction func deleteVideo(_ sender: Any) {
-        //to do
+        if let url = urlOfSelectedVideo, let indexPath = indexPath {
+            delegate?.delete(.video(url), of: indexPath)
+        }
+        
     }
     
     override func viewDidLoad() {
@@ -49,7 +54,6 @@ final class PlayerViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(videoDidEnded), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
         guard let urlOfSelectedVideo = urlOfSelectedVideo else { return }
         setURL(urlOfSelectedVideo)
-        
     }
     
     @objc

@@ -10,6 +10,8 @@ import UIKit
 class MediaDetailsCollectionViewCell: UICollectionViewCell {
     
     var mediaController: MediaDetailsCollectionViewController?
+    weak var delegate: DeleteDataDelegate?
+    var indexPath: IndexPath?
     
     func config(photo media: MediaData) {
         if case let .photo(data) = media {
@@ -28,6 +30,8 @@ class MediaDetailsCollectionViewCell: UICollectionViewCell {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let playerVC = storyboard.instantiateViewController(withIdentifier: "PlayerViewController") as! PlayerViewController
         playerVC.urlOfSelectedVideo = url
+        playerVC.delegate = delegate
+        playerVC.indexPath = indexPath
         mediaController?.addChild(playerVC)
         view.addSubview(playerVC.view)
         playerVC.view.frame = contentView.bounds
@@ -40,6 +44,8 @@ class MediaDetailsCollectionViewCell: UICollectionViewCell {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let photoVC = storyboard.instantiateViewController(withIdentifier: "PhotoViewController") as! PhotoViewController
         photoVC.photoData = media
+        photoVC.delegate = delegate
+        photoVC.indexPath = indexPath
         mediaController?.addChild(photoVC)
         view.addSubview(photoVC.view)
         photoVC.view.frame = contentView.bounds
@@ -47,6 +53,7 @@ class MediaDetailsCollectionViewCell: UICollectionViewCell {
         photoVC.view.contentMode = .scaleAspectFit
         photoVC.didMove(toParent: mediaController)
     }
+
     
     
     

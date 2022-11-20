@@ -9,7 +9,7 @@ import UIKit
 
 class MediaLibraryCollectionViewController: UICollectionViewController {
 
-    let mediaRepository = MediaLibrary.shared.mediaRepository
+    let modelOf = MediaLibrary.shared
     
     var columnLayout = ColumnFlowLayout(
         cellsPerRow: 3,
@@ -21,7 +21,13 @@ class MediaLibraryCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.collectionViewLayout = columnLayout
-        print(mediaRepository)
+        print(modelOf)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
     }
 
 }
@@ -29,17 +35,17 @@ class MediaLibraryCollectionViewController: UICollectionViewController {
 extension MediaLibraryCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        mediaRepository.count
+        modelOf.mediaRepository.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaDataCell", for: indexPath) as! MediaLibraryCollectionViewCell
-        cell.config(of: mediaRepository[indexPath.row])
+        cell.config(of: modelOf.mediaRepository[indexPath.row])
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(mediaRepository[indexPath.row])
+        print(modelOf.mediaRepository[indexPath.row])
         performSegue(withIdentifier: "show_media_details", sender: nil)
     }
     
@@ -48,6 +54,17 @@ extension MediaLibraryCollectionViewController {
            let destination = segue.destination as? MediaDetailsCollectionViewController,
            let mediaDataIndex = self.collectionView.indexPathsForSelectedItems?.first {
             destination.indexOfInitialMediaData = mediaDataIndex
+            destination.delegate = self
+        }
+    }
+    
+    
+}
+
+extension MediaLibraryCollectionViewController: UpdateMediaLibrary {
+    func reloadMediaLibrary() {
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
         }
     }
     

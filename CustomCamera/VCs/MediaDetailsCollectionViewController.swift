@@ -11,16 +11,31 @@ import UIKit
 
 class MediaDetailsCollectionViewController: UICollectionViewController {
 
-    let mediaRepository = MediaLibrary.shared.mediaRepository
+    let modelOf = MediaLibrary.shared
     var indexOfInitialMediaData: IndexPath?
+    weak var delegate: UpdateMediaLibrary?
+    
+    @IBOutlet weak var backButton: UINavigationItem!
     
     private let reuseIdentifier = "MediaDetailsCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
-        
+        self.navigationItem.hidesBackButton = true
+        let newBackButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(self.back(_:)))
+        self.navigationItem.leftBarButtonItem = newBackButton
     }
+    
+    @objc
+    func back(_ sender: UIBarButtonItem) {
+        delegate?.reloadMediaLibrary()
+        navigationController?.popViewController(animated: true)
+    }
+    
+    
+    
+    
     
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositonalLayout())
@@ -44,12 +59,17 @@ extension MediaDetailsCollectionViewController {
     func createCompositonalLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout {
             sectionIndex, layoutEnvironment in
-            let mediaData = self.mediaRepository[sectionIndex]
-            
-            switch mediaData.self {
-            default:
-                return self.createMediaDataSection(using: mediaData)
+            if self.modelOf.mediaRepository != [] {
+                let mediaData = self.modelOf.mediaRepository[sectionIndex]
+                
+                switch mediaData.self {
+                default:
+                    return self.createMediaDataSection(using: mediaData)
+                }
             }
+            guard let placeholder = UIImage(systemName: "camera.macro")?.pngData() else { return nil }
+            return self.createMediaDataSection(using: .photo(placeholder))
+            
         }
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
@@ -73,14 +93,20 @@ extension MediaDetailsCollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mediaRepository.count
+        if modelOf.mediaRepository.isEmpty {
+            self.navigationController?.popViewController(animated: true)
+            
+        }
+        return modelOf.mediaRepository.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MediaDetailsCollectionViewCell
         cell.mediaController = self
-        let media = mediaRepository[indexPath.row]
+        cell.delegate = self
+        cell.indexPath = indexPath
+        let media = modelOf.mediaRepository[indexPath.row]
         if case .photo(_) = media {
             cell.config(photo: media)
         } else if case .video(_) = media {
@@ -90,19 +116,23 @@ extension MediaDetailsCollectionViewController {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        //For entire screen size
-//        let screenSize = UIScreen.main.bounds.size
-//        return screenSize
-        //If you want to fit the size with the size of ViewController use bellow
-        let viewControllerSize = self.view.frame.size
-        return viewControllerSize
+}
 
-        // Even you can set the cell to uicollectionview size
-//        let cvRect = collectionView.frame
-//        return CGSize(width: cvRect.width, height: cvRect.height)
-
-
+extension MediaDetailsCollectionViewController: DeleteDataDelegate {
+    func delete(_ media: MediaData, of indexPath: IndexPath) {
+        MediaLibrary.shared.remove(media)
+        
+        DispatchQueue.main.async {
+            self.collectionView.deleteItems(at: [indexPath])
+            self.collectionView.reloadData()
+        }
+        
+        
+        
     }
+    
+}
 
+protocol UpdateMediaLibrary: AnyObject {
+    func reloadMediaLibrary()
 }

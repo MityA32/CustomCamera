@@ -179,6 +179,9 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" style="editor" id="WL8-wB-vUf"/>
+                    <connections>
+                        <outlet property="backButton" destination="WL8-wB-vUf" id="pTl-2E-9Vg"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jm0-6z-X16" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -214,6 +217,9 @@
                                                 <rect key="frame" x="196.66666666666663" y="0.0" width="196.33333333333337" height="64"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system"/>
+                                                <connections>
+                                                    <action selector="deletePhoto:" destination="t1z-yD-DZN" eventType="touchUpInside" id="98M-QJ-aZ3"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>

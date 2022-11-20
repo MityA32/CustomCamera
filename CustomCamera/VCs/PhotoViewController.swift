@@ -12,6 +12,8 @@ class PhotoViewController: UIViewController {
 
     var photoData: Data?
     weak var mediaController: MediaDetailsCollectionViewController?
+    weak var delegate: DeleteDataDelegate?
+    var indexPath: IndexPath?
     
     @IBOutlet private weak var photoView: UIView!
     
@@ -19,6 +21,11 @@ class PhotoViewController: UIViewController {
         savePhotoWithAlert()
     }
     
+    @IBAction func deletePhoto(_ sender: Any) {
+        if let photoData = photoData, let indexPath = indexPath {
+            delegate?.delete(.photo(photoData), of: indexPath)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,9 +56,9 @@ class PhotoViewController: UIViewController {
         }))
         present(saveAlert, animated: true, completion: nil)
     }
-    
-    
-    
 
+}
 
+protocol DeleteDataDelegate: AnyObject {
+    func delete(_ media: MediaData, of indexPath: IndexPath)
 }

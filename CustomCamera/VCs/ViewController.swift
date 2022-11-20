@@ -58,6 +58,7 @@ extension ViewController: CameraDelegate {
     }
     
     func camera(_ camera: Camera, didFinishrecordingVideo url: URL) {
+        print(MediaData.video(url))
         MediaLibrary.shared.add(MediaData.video(url))
     }
 }
