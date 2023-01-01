@@ -9,7 +9,7 @@ import UIKit
 
 class MediaLibraryCollectionViewController: UICollectionViewController {
 
-    let modelOf = MediaLibrary.shared
+    @Fetch<Media> var mediaRepository
     
     var columnLayout = ColumnFlowLayout(
         cellsPerRow: 3,
@@ -32,18 +32,18 @@ class MediaLibraryCollectionViewController: UICollectionViewController {
 extension MediaLibraryCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        modelOf.mediaRepository.count
+        mediaRepository.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaDataCell", for: indexPath) as! MediaLibraryCollectionViewCell
-        
-        cell.config(of: modelOf.mediaRepository[indexPath.row])
+        print(mediaRepository[indexPath.row].mediaURL)
+        cell.config(of: mediaRepository[indexPath.row])
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(modelOf.mediaRepository[indexPath.row])
+        print(mediaRepository[indexPath.row])
         performSegue(withIdentifier: "show_media_details", sender: nil)
     }
     
@@ -66,7 +66,8 @@ extension MediaLibraryCollectionViewController: MediaLibraryDelegate {
         }
     }
     
-    func delete(_ media: MediaData, of indexPath: IndexPath) {
+    func delete(_ media: Media, of indexPath: IndexPath) {
+        
         MediaLibrary.shared.remove(media)
         DispatchQueue.main.async { [collectionView] in
             collectionView?.deleteItems(at: [indexPath])
@@ -76,11 +77,7 @@ extension MediaLibraryCollectionViewController: MediaLibraryDelegate {
 
 protocol MediaLibraryDelegate: AnyObject {
     func reloadMediaLibrary()
-    func delete(_ media: MediaData, of indexPath: IndexPath)
+    func delete(_ media: Media, of indexPath: IndexPath)
 }
 
-extension MediaLibraryDelegate {
-    func reloadMediaLibrary() {
-        
-    }
-}
+

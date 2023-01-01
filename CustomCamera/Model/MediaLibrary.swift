@@ -8,48 +8,44 @@
 import Foundation
 
 enum MediaData: Codable, Equatable {
-    case photo(Data)
+    case photo(URL)
     case video(URL)
+}
+
+enum MediaType: String {
+    case photo
+    case video
 }
 
 class MediaLibrary {
 
     static let shared = MediaLibrary()
     
-    private(set) var mediaRepository: [MediaData]
-    let mediaKey = "mediaData"
-    
-    init() {
-        if let data = UserDefaults.standard.data(forKey: mediaKey) {
-            if let decodedData = try? JSONDecoder().decode([MediaData].self, from: data) {
-                mediaRepository = decodedData
-                return
-            }
-        }
-        
-        //if no saved data
-        mediaRepository = []
-    }
+    @Fetch<Media> var mediaRepository
     
 }
 
 extension MediaLibrary {
-    private func save() {
-        if let encodedData = try? JSONEncoder().encode(mediaRepository) {
-            UserDefaults.standard.set(encodedData, forKey: mediaKey)
-        }
-    }
+
     
     func add(_ mediaData: MediaData) {
-        mediaRepository.append(mediaData)
-        save()
+        CoreDataService.shared.write {
+            CoreDataService.shared.create(Media.self) { media in
+                if case .photo(let url) = mediaData {
+                    media.mediaURL = url
+                    media.type = MediaType.photo.rawValue
+                } else if case .video(let url) = mediaData {
+                    media.mediaURL = url
+                    media.type = MediaType.video.rawValue
+                }
+            }
+        }
     }
     
-    func remove(_ mediaData: MediaData) {
-        if let index = mediaRepository.firstIndex(where: { $0 == mediaData }) {
-            mediaRepository.remove(at: index)
+    func remove(_ media: Media) {
+        CoreDataService.shared.write {
+            CoreDataService.shared.delete(media)
         }
-        save()
     }
 }
 

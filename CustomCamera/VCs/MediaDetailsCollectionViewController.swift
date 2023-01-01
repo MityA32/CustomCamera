@@ -9,7 +9,7 @@ import UIKit
 
 class MediaDetailsCollectionViewController: UICollectionViewController {
 
-    let modelOf = MediaLibrary.shared
+    @Fetch<Media> var mediaRepository
     var indexOfInitialMediaData: IndexPath?
     weak var delegate: MediaLibraryDelegate?
     
@@ -49,15 +49,17 @@ class MediaDetailsCollectionViewController: UICollectionViewController {
 extension MediaDetailsCollectionViewController {
     
     func createCompositonalLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout {
+        let layout = UICollectionViewCompositionalLayout { [weak self]
             sectionIndex, layoutEnvironment in
-            if self.modelOf.mediaRepository != [] {
-                let mediaData = self.modelOf.mediaRepository[sectionIndex]
-                
-                switch mediaData.self {
-                default:
-                    return self.createMediaDataSection(using: mediaData)
+            if self?.mediaRepository != [] {
+                if let mediaData = self?.mediaRepository[sectionIndex] {
+                    switch mediaData.self {
+                    default:
+                        return self?.createMediaDataSection(using: mediaData)
+                    }
                 }
+                
+                
             }
 //            guard let placeholder = UIImage(systemName: "camera.macro")?.pngData() else { return nil }
 //            return self.createMediaDataSection(using: .photo(placeholder))
@@ -71,7 +73,7 @@ extension MediaDetailsCollectionViewController {
         
     }
     
-    func createMediaDataSection(using section: MediaData) -> NSCollectionLayoutSection {
+    func createMediaDataSection(using section: Media) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
         
@@ -85,7 +87,7 @@ extension MediaDetailsCollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return modelOf.mediaRepository.count
+        return mediaRepository.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -93,10 +95,10 @@ extension MediaDetailsCollectionViewController {
         cell.mediaController = self
         cell.delegate = self
         cell.indexPath = indexPath
-        let media = modelOf.mediaRepository[indexPath.row]
-        if case .photo(_) = media {
+        let media = mediaRepository[indexPath.row]
+        if media.type == MediaType.photo.rawValue  {
             cell.config(photo: media)
-        } else if case .video(_) = media {
+        } else if media.type == MediaType.video.rawValue {
             cell.config(video: media)
         }
         return cell
@@ -105,23 +107,29 @@ extension MediaDetailsCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("tut nado shob bylo")
     }
-    
+
 }
 
 extension MediaDetailsCollectionViewController: MediaLibraryDelegate {
-    func delete(_ media: MediaData, of indexPath: IndexPath) {
+    func delete(_ media: Media, of indexPath: IndexPath) {
         
         delegate?.delete(media, of: indexPath)
         
-        DispatchQueue.main.async { [collectionView, modelOf, navigationController] in
+        DispatchQueue.main.async { [collectionView, mediaRepository, navigationController] in
             collectionView?.deleteItems(at: [indexPath])
-            if indexPath.row == modelOf.mediaRepository.count {
-                if modelOf.mediaRepository.isEmpty {
+            if indexPath.row == mediaRepository.count {
+                if mediaRepository.isEmpty {
                     navigationController?.popViewController(animated: true)
                 }
                 let currentIndexPath = IndexPath(item: indexPath.row - 1, section: indexPath.section)
                 collectionView?.scrollToItem(at: currentIndexPath, at: .centeredHorizontally, animated: true)
             }
+        }
+    }
+    
+    func reloadMediaLibrary() {
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.reloadData()
         }
     }
 }

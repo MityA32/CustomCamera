@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		935229DD2959B6480018108E /* MediaData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 935229DB2959B6480018108E /* MediaData.xcdatamodeld */; };
+		935229E32959BDFF0018108E /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935229E22959BDFF0018108E /* CoreDataHelpers.swift */; };
 		935CDD0829225BA10025BDD4 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935CDD0729225BA10025BDD4 /* PlayerViewController.swift */; };
 		935CDD0A292265B90025BDD4 /* MediaLibraryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935CDD09292265B90025BDD4 /* MediaLibraryCollectionViewController.swift */; };
 		935CDD0C2923038D0025BDD4 /* MediaLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935CDD0B2923038D0025BDD4 /* MediaLibrary.swift */; };
@@ -25,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		935229DC2959B6480018108E /* MediaData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MediaData.xcdatamodel; sourceTree = "<group>"; };
+		935229E22959BDFF0018108E /* CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelpers.swift; sourceTree = "<group>"; };
 		935CDD0729225BA10025BDD4 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		935CDD09292265B90025BDD4 /* MediaLibraryCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaLibraryCollectionViewController.swift; sourceTree = "<group>"; };
 		935CDD0B2923038D0025BDD4 /* MediaLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaLibrary.swift; sourceTree = "<group>"; };
@@ -33,7 +37,7 @@
 		93761790292678530093B4C1 /* MediaDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetailsCollectionViewController.swift; sourceTree = "<group>"; };
 		9376179229267D070093B4C1 /* MediaDetailsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetailsCollectionViewCell.swift; sourceTree = "<group>"; };
 		93816DD62929511B00393162 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
-		93EDF37F2919CDB900D5C29A /* CustomCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		93EDF37F2919CDB900D5C29A /* CustomCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = CustomCamera.app; path = "/Users/dmytrohetman/Documents/CustomCamera/build/Debug-iphoneos/CustomCamera.app"; sourceTree = "<absolute>"; };
 		93EDF3822919CDB900D5C29A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93EDF3842919CDB900D5C29A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		93EDF3862919CDB900D5C29A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -55,6 +59,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		935229E12959BDD90018108E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				935229E22959BDFF0018108E /* CoreDataHelpers.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		935CDD0F292316570025BDD4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -98,16 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				93EDF3812919CDB900D5C29A /* CustomCamera */,
-				93EDF3802919CDB900D5C29A /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		93EDF3802919CDB900D5C29A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				93EDF37F2919CDB900D5C29A /* CustomCamera.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		93EDF3812919CDB900D5C29A /* CustomCamera */ = {
@@ -116,12 +119,14 @@
 				93816DD82929540000393162 /* Utils */,
 				935CDD10292316660025BDD4 /* VCs */,
 				935CDD0F292316570025BDD4 /* Model */,
-				93EDF3822919CDB900D5C29A /* AppDelegate.swift */,
+				935229E12959BDD90018108E /* Services */,
 				93EDF3842919CDB900D5C29A /* SceneDelegate.swift */,
+				93EDF3822919CDB900D5C29A /* AppDelegate.swift */,
 				93EDF3882919CDB900D5C29A /* Main.storyboard */,
 				93EDF38B2919CDBA00D5C29A /* Assets.xcassets */,
 				93EDF38D2919CDBA00D5C29A /* LaunchScreen.storyboard */,
 				93EDF3902919CDBA00D5C29A /* Info.plist */,
+				935229DB2959B6480018108E /* MediaData.xcdatamodeld */,
 			);
 			path = CustomCamera;
 			sourceTree = "<group>";
@@ -170,7 +175,7 @@
 				Base,
 			);
 			mainGroup = 93EDF3762919CDB900D5C29A;
-			productRefGroup = 93EDF3802919CDB900D5C29A /* Products */;
+			productRefGroup = 93EDF3762919CDB900D5C29A;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -201,6 +206,7 @@
 				935CDD1329246D580025BDD4 /* ColumnFlowLayout.swift in Sources */,
 				93EDF3972919CDD600D5C29A /* Camera.swift in Sources */,
 				93EDF3872919CDB900D5C29A /* ViewController.swift in Sources */,
+				935229E32959BDFF0018108E /* CoreDataHelpers.swift in Sources */,
 				935CDD0E292316440025BDD4 /* MediaLibraryCollectionViewCell.swift in Sources */,
 				93816DD72929511B00393162 /* PhotoViewController.swift in Sources */,
 				93EDF3832919CDB900D5C29A /* AppDelegate.swift in Sources */,
@@ -208,6 +214,7 @@
 				93EDF3852919CDB900D5C29A /* SceneDelegate.swift in Sources */,
 				935CDD0A292265B90025BDD4 /* MediaLibraryCollectionViewController.swift in Sources */,
 				9376179329267D070093B4C1 /* MediaDetailsCollectionViewCell.swift in Sources */,
+				935229DD2959B6480018108E /* MediaData.xcdatamodeld in Sources */,
 				935CDD0829225BA10025BDD4 /* PlayerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -434,6 +441,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		935229DB2959B6480018108E /* MediaData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				935229DC2959B6480018108E /* MediaData.xcdatamodel */,
+			);
+			currentVersion = 935229DC2959B6480018108E /* MediaData.xcdatamodel */;
+			path = MediaData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 93EDF3772919CDB900D5C29A /* Project object */;
 }

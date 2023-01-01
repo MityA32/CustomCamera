@@ -12,12 +12,17 @@ class MediaLibraryCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet private weak var imageView: UIImageView!
     
-    func config(of media: MediaData) {
+    func config(of media: Media) {
+        
+        //invalid url of video
+        print(try? Data(contentsOf: media.mediaURL!))
         imageView.clipsToBounds = true
-        if case let .photo(data) = media {
-            imageView.image = UIImage(data: data)
-        } else if case let .video(url) = media {
-            self.imageView.image = createVideoThumbnail(from: url)
+        if media.type == MediaType.photo.rawValue {
+            if let dataFromURL = try? Data(contentsOf: media.mediaURL ?? URL(filePath: "")) {
+                imageView.image = UIImage(data: dataFromURL)
+            }
+        } else if media.type == MediaType.video.rawValue {
+            self.imageView.image = createVideoThumbnail(from: media.mediaURL ?? URL(filePath: ""))
             let videoIcon = UIImageView(image: UIImage(systemName: "video.fill"))
             videoIcon.tintColor = .white
             self.imageView.addSubview(videoIcon)
@@ -31,14 +36,14 @@ class MediaLibraryCollectionViewCell: UICollectionViewCell {
         assetImgGenerate.maximumSize = CGSize(width: frame.width, height: frame.height)
 
         let time = CMTimeMakeWithSeconds(0.0, preferredTimescale: 600)
+        // why it catches
         do {
             let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
             let thumbnail = UIImage(cgImage: img)
             return thumbnail
         } catch {
-            print("fgsjksfjk")
             print(error.localizedDescription)
-            return nil
+            return UIImage(systemName: "apple.logo")
         }
     }
 }

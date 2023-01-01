@@ -10,8 +10,8 @@ import UIKit
 
 protocol CameraDelegate: AnyObject {
     
-    func camera(_ camera: Camera, didCapture: Data)
-    func camera(_ camera: Camera, didFinishrecordingVideo: URL)
+    func camera(_ camera: Camera, didCapturePhoto: URL)
+    func camera(_ camera: Camera, didFinishRecordingVideo: URL)
     
 }
 
@@ -183,11 +183,14 @@ private extension Camera {
 
 extension Camera: AVCapturePhotoCaptureDelegate, AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        delegate?.camera(self, didFinishrecordingVideo: outputFileURL)
+        delegate?.camera(self, didFinishRecordingVideo: outputFileURL)
     }
+    
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         guard let data = photo.fileDataRepresentation() else { return }
-        delegate?.camera(self, didCapture: data)
+        guard let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appending(path: "\(stringOfCurrentDate()).jpeg") else { return }
+        try? data.write(to: url)
+        delegate?.camera(self, didCapturePhoto: url)
     }
 }

@@ -10,7 +10,7 @@ import Photos
 
 class PhotoViewController: UIViewController {
 
-    var photoData: Data?
+    var activeMedia: Media?
     weak var mediaController: MediaDetailsCollectionViewController?
     weak var delegate: MediaLibraryDelegate?
     var indexPath: IndexPath?
@@ -22,8 +22,9 @@ class PhotoViewController: UIViewController {
     }
     
     @IBAction func deletePhoto(_ sender: Any) {
-        if let photoData = photoData, let indexPath = indexPath {
-            delegate?.delete(.photo(photoData), of: indexPath)
+        
+        if let activeMedia, let indexPath {
+            delegate?.delete(activeMedia, of: indexPath)
         }
     }
     
@@ -31,7 +32,7 @@ class PhotoViewController: UIViewController {
         super.viewDidLoad()
         
         
-        guard let photoData = photoData else { return }
+        guard let photoData = try? Data(contentsOf: activeMedia?.mediaURL ?? URL(filePath: "")) else { return }
         config(of: photoData)
 
     }
@@ -48,10 +49,11 @@ class PhotoViewController: UIViewController {
     
     func savePhotoWithAlert() {
         let saveAlert = UIAlertController(title: "Alert", message: "Photo is saved", preferredStyle: UIAlertController.Style.alert)
-        saveAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-            guard let photoData = self.photoData else { return }
+        saveAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (action: UIAlertAction!) in
             try? PHPhotoLibrary.shared().performChangesAndWait {
-                PHAssetCreationRequest.forAsset().addResource(with: .photo, data: photoData, options: nil)
+                if let data = try? Data(contentsOf: self?.activeMedia?.mediaURL ?? URL(filePath: "")) {
+                    PHAssetCreationRequest.forAsset().addResource(with: .photo, data: data, options: nil)
+                }
             }
         }))
         present(saveAlert, animated: true, completion: nil)

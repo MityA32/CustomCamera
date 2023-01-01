@@ -13,23 +13,23 @@ class MediaDetailsCollectionViewCell: UICollectionViewCell {
     weak var delegate: MediaLibraryDelegate?
     var indexPath: IndexPath?
     
-    func config(photo media: MediaData) {
-        if case let .photo(data) = media {
-            display(photo: data, on: contentView)
+    func config(photo media: Media) {
+        if media.type == MediaType.photo.rawValue {
+            display(photo: media, on: contentView)
         }
     }
     
-    func config(video media: MediaData) {
-        if case let .video(url) = media {
-            display(video: url, on: contentView)
+    func config(video media: Media) {
+        if media.type == MediaType.video.rawValue {
+            display(video: media, on: contentView)
         }
     }
 
     
-    func display(video url: URL, on view: UIView) {
+    func display(video media: Media, on view: UIView) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let playerVC = storyboard.instantiateViewController(withIdentifier: "PlayerViewController") as! PlayerViewController
-        playerVC.urlOfSelectedVideo = url
+        playerVC.activeMedia = media
         playerVC.delegate = delegate
         playerVC.indexPath = indexPath
         mediaController?.addChild(playerVC)
@@ -40,10 +40,10 @@ class MediaDetailsCollectionViewCell: UICollectionViewCell {
         playerVC.didMove(toParent: mediaController)
     }
     
-    func display(photo media: Data, on view: UIView) {
+    func display(photo media: Media, on view: UIView) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let photoVC = storyboard.instantiateViewController(withIdentifier: "PhotoViewController") as! PhotoViewController
-        photoVC.photoData = media
+        photoVC.activeMedia = media
         photoVC.delegate = delegate
         photoVC.indexPath = indexPath
         mediaController?.addChild(photoVC)

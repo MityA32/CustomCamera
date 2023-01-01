@@ -12,7 +12,7 @@ import Photos
 final class PlayerViewController: UIViewController {
 
     var player: AVPlayer?
-    var urlOfSelectedVideo: URL?
+    var activeMedia: Media?
     weak var mediaController: MediaDetailsCollectionViewController?
     weak var delegate: MediaLibraryDelegate?
     var indexPath: IndexPath?
@@ -43,8 +43,8 @@ final class PlayerViewController: UIViewController {
     
     
     @IBAction func deleteVideo(_ sender: Any) {
-        if let url = urlOfSelectedVideo, let indexPath {
-            delegate?.delete(.video(url), of: indexPath)
+        if let activeMedia, let indexPath {
+            delegate?.delete(activeMedia, of: indexPath)
         }
         
     }
@@ -52,7 +52,7 @@ final class PlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(videoDidEnded), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
-        guard let urlOfSelectedVideo = urlOfSelectedVideo else { return }
+        guard let urlOfSelectedVideo = activeMedia?.mediaURL else { return }
         setURL(urlOfSelectedVideo)
     }
     
@@ -91,9 +91,10 @@ final class PlayerViewController: UIViewController {
     func saveVideoWithAlert() {
         let saveAlert = UIAlertController(title: "Alert", message: "Video is saved", preferredStyle: UIAlertController.Style.alert)
         saveAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-            guard let url = self.urlOfSelectedVideo else { return }
             try? PHPhotoLibrary.shared().performChangesAndWait {
-                PHAssetCreationRequest.forAsset().addResource(with: .video, fileURL: url, options: nil)
+                if let url = self.activeMedia?.mediaURL {
+                    PHAssetCreationRequest.forAsset().addResource(with: .video, fileURL: url, options: nil)
+                }
             }
         }))
         present(saveAlert, animated: true, completion: nil)

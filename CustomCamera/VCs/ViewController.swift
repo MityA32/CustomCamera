@@ -51,12 +51,13 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: CameraDelegate {
-    func camera(_ camera: Camera, didCapture imageData: Data) {
-        MediaLibrary.shared.add(MediaData.photo(imageData))
+    func camera(_ camera: Camera, didCapturePhoto url: URL) {
+        
+        MediaLibrary.shared.add(MediaData.photo(url))
     }
     
-    func camera(_ camera: Camera, didFinishrecordingVideo url: URL) {
-        print(MediaData.video(url))
+    func camera(_ camera: Camera, didFinishRecordingVideo url: URL) {
+    
         MediaLibrary.shared.add(MediaData.video(url))
     }
 }
