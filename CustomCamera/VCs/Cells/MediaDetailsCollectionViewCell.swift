@@ -32,12 +32,7 @@ class MediaDetailsCollectionViewCell: UICollectionViewCell {
         playerVC.activeMedia = media
         playerVC.delegate = delegate
         playerVC.indexPath = indexPath
-        mediaController?.addChild(playerVC)
-        view.addSubview(playerVC.view)
-        playerVC.view.frame = contentView.bounds
-        playerVC.view.center = contentView.center
-        playerVC.view.contentMode = .scaleAspectFit
-        playerVC.didMove(toParent: mediaController)
+        displayMedia(on: playerVC, media: media, on: view)
     }
     
     func display(photo media: Media, on view: UIView) {
@@ -46,14 +41,18 @@ class MediaDetailsCollectionViewCell: UICollectionViewCell {
         photoVC.activeMedia = media
         photoVC.delegate = delegate
         photoVC.indexPath = indexPath
-        mediaController?.addChild(photoVC)
-        view.addSubview(photoVC.view)
-        photoVC.view.frame = contentView.bounds
-        photoVC.view.center = contentView.center
-        photoVC.view.contentMode = .scaleAspectFit
-        photoVC.didMove(toParent: mediaController)
+        displayMedia(on: photoVC, media: media, on: view)
+        
     }
 
+    func displayMedia<T: UIViewController>(on vc: T, media: Media, on view: UIView) {
+        mediaController?.addChild(vc)
+        view.addSubview(vc.view)
+        vc.view.frame = contentView.bounds
+        vc.view.center = contentView.center
+        vc.view.contentMode = .scaleAspectFit
+        vc.didMove(toParent: mediaController)
+    }
     
     
     
