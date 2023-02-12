@@ -13,9 +13,6 @@ class MediaLibraryCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var imageView: UIImageView!
     
     func config(of media: Media) {
-        
-        //invalid url of video
-        print(try? Data(contentsOf: media.mediaURL!))
         imageView.clipsToBounds = true
         if media.type == MediaType.photo.rawValue {
             if let dataFromURL = try? Data(contentsOf: media.mediaURL ?? URL(filePath: "")) {
